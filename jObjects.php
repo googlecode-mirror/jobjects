@@ -23,13 +23,17 @@ class jObject
             if ( !( class_exists($name) ) )
                 throw new Exception("Class $name not exists");
 
-            if ( sizeof($args) > 0 )
-            {
+            // if ( sizeof($args) > 0 )
+            // {
                 $reflection = new ReflectionClass($name);
+
+                if ( !( $reflection->hasProperty('jObjects') ) )
+                    throw new Exception("Class not supported by jObjects");
+
                 $this->_instance = call_user_func_array(array(&$reflection, 'newInstance'), $args);
-            }
-            else
-                $this->_instance = new $name();
+            // }
+            // else
+            //     $this->_instance = new $name();
 
             $this->save();
         }
